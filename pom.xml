@@ -10,8 +10,8 @@
     <!-- tag::joda[] -->
      <properties>
            <java.version>1.8</java.version>
-           <maven.compiler.source>1.7</maven.compiler.source>
-           <maven.compiler.target>1.7</maven.compiler.target>
+           <maven.compiler.source>1.6</maven.compiler.source>
+           <maven.compiler.target>1.6</maven.compiler.target>
      </properties>
      
 
@@ -25,13 +25,11 @@
        <!-- end::joda[] -->
        
     <build>
-        
-    
         <plugins>
             <plugin>
                     <groupId>org.sonarsource.scanner.maven</groupId>
                     <artifactId>sonar-maven-plugin</artifactId>
-                    <version>3.6.3</version>
+                    <version>3.6.0.1398</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jacoco</groupId>
@@ -67,7 +65,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
-                 <sonar.host.url>http://43.204.6.166:9000//</sonar.host.url>
+                 <sonar.host.url>http://43.204.6.166:9000/</sonar.host.url>
                  <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
                   <aggregate.report.dir>target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
 
@@ -107,5 +105,6 @@
             </build>
         </profile>
     </profiles>   
-      
+        
+   
 </project>
