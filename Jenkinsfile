@@ -1,18 +1,31 @@
 pipeline{
-    agent any
-    environment {
-        PATH = "/opt/apache-maven-3.6.3/bin:$PATH"
-    }
-    stages{
-        stage('git clone'){
-            steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'github siva', url: 'https://github.com/sivanjaneyareddy/java-hello-world-with-maven.git']]])
+
+      agent {
+                docker {
+                image 'maven:3-openjdk-11'
+
+                }
             }
-        }
-        stage('build'){
-            steps{
-               sh 'mvn clean install'
-            }
-        }
-    }
+        
+        stages{
+
+              stage('Quality Gate Status Check'){
+                  steps{
+                      script{
+			      withSonarQubeEnv('sonarserver') { 
+			      sh "mvn clean sonar:sonar"
+                       	     	}
+			      timeout(time: 1, unit: 'HOURS') {
+			      def qg = waitForQualityGate()
+				      if (qg.status != 'OK') {
+					   error "Pipeline aborted due to quality gate failure: ${qg.status}"
+				      }
+                    		}
+		    	    sh "mvn clean install"
+		  
+                 	}
+               	 }  
+              }	
+		
+            }	       	     	         
 }
