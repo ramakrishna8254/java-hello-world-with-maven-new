@@ -15,21 +15,10 @@ pipeline{
 		    sh 'docker build -t dockerfile .'
             }
          }
-	    stage('Sonar_Analysis'){
-	     steps{
-                      script{
-                      withSonarQubeEnv('sonarserver') { 
-                      sh "mvn sonar:sonar"
-                       }
-                      timeout(time: 1, unit: 'HOURS') {
-                      def qg = waitForQualityGate()
-                      if (qg.status != 'OK') {
-                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                      }
-                    }
-		    sh "mvn clean install"
-                  }
-                }  
-              }
-    	}
+	   stage('SonarQube Analytics') {
+            steps {
+                withSonarQubeEnv('Sonarqube-7.9.1') {
+                    sh 'mvn clean package sonar:sonar'                         
+                }
+            }
     }
