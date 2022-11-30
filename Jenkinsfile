@@ -6,7 +6,7 @@ pipeline{
     stages{
        stage('GetCode'){
             steps{
-                git 'https://github.com/ravdy/javaloginapp.git'
+                git 'https://github.com/ramakrishna8254/java-hello-world-with-maven-new.git'
             }
          }        
        stage('Build'){
